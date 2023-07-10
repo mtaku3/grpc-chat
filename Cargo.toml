@@ -7,11 +7,11 @@ edition = "2021"
 
 [[bin]] # Bin to run the Chat gRPC server
 name = "server"
-path = "src/server.rs"
+path = "src/helloworld-server.rs"
 
-# [[bin]] # Bin to run the Chat gRPC client
-# name = "client"
-# path = "src/graphql-getway.rs"
+[[bin]] # Bin to run the Chat gRPC client
+name = "client"
+path = "src/helloworld-client.rs"
 
 [dependencies]
 tonic = "0.8"

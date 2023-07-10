@@ -1,6 +1,9 @@
-FROM rust:1.70-bookworm
+FROM rust:1.70-bookworm AS base
 
 RUN apt-get update && apt-get -y install --no-install-recommends protobuf-compiler && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+
+FROM base AS development
 
 ARG USERNAME=vscode
 ARG USER_UID=1000
@@ -22,3 +25,16 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
+
+ENTRYPOINT ["bash"]
+
+
+FROM base AS production
+
+COPY . /workspace
+
+WORKDIR /workspace
+
+RUN cargo build --release
+
+ENTRYPOINT ["cargo", "run", "--bin", "server"]
