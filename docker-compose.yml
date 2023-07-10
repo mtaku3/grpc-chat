@@ -5,3 +5,5 @@ services:
     build:
       dockerfile: Dockerfile
       target: production
+    expose:
+      - 50051:50051
